@@ -1,3 +1,11 @@
-.page {
-  padding: 20px;
+.buttonWrapper{
+  width: 100%;
+}
+.button{
+  margin: 10px;
+  background-color: black;
+  color : white;
+  font-weight: bold;
+  padding: 7.5px 15px;
+  border-radius: 10px;
 }

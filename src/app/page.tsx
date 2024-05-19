@@ -1,18 +1,21 @@
-import Image from "next/image";
+"use client"
 import styles from "./page.module.css";
-import Link from "next/link";
-import ProductCard from "./components/ProductCard";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleCreate = () => {
+    router.push("/job/create");
+  };
+  const handleFetchJobs = () => {
+    router.push("/job/list")
+  }
   return (
     <main>
-      <h1>
-        Hello World
-      </h1>
-      <Link href = "/users">Users</Link>
-      <ProductCard/>
-      <div>
-        <p>{process.env.NEXT_PUBLIC_BACKEND_HOST}</p>
+      <div className={styles.buttonWrapper}>
+        <button onClick={handleCreate} className={styles.button}>Create Job</button>
+        <button onClick={handleFetchJobs} className={styles.button}>Get All Jobs</button>
       </div>
     </main>
   );
