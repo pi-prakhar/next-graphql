@@ -13,7 +13,16 @@ export const DeleteIcon: React.FC<ChildProps> = (ChildProps) =>{
         id : ChildProps.id
     }
     const handleDelete = async () => {
-        const res = await graphQLClient.request(DELETE_JOB,variables)
+        fetch(graphQLClient , {
+            method :"POST",
+            headers : {
+                'Content-Type' : 'application/json',
+            },
+            body : JSON.stringify({
+                query : DELETE_JOB,
+                variables : variables
+            })
+        })
     }
     return (
         <div className={styles.iconContainer} onClick={handleDelete}>

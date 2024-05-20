@@ -1,4 +1,3 @@
-"use client"
 import React from "react";
 import graphQLClient from "@/graphQL/client";
 import { GET_ALL_JOBS } from "@/graphQL/queries";
@@ -8,9 +7,21 @@ import rootStyles from "../@styles/job.module.css";
 import pageStyles from "./page.module.css"
 
 export const GetAllJobs = async () => {
-    const res : Jobs = await graphQLClient.request(GET_ALL_JOBS,{},{cache: "no-cache" } )
-    const jobs : JobListing[]  = res.jobs
-    return jobs;
+    return fetch(graphQLClient , {
+        cache :'no-store',
+        method :"POST",
+        headers : {
+            'Content-Type' : 'application/json',
+        },
+        body : JSON.stringify({
+            query : GET_ALL_JOBS,
+            variables : {}
+        })
+    }).then((res)=>{
+        return res.json()
+    }).then((res)=>{
+        return res.data.jobs;
+    })
 }
 
 const JobsPage = async  () => {

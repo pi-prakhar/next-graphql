@@ -1,4 +1,3 @@
-"use client"
 import JobForm from "@/app/components/job-form/job-form";
 import {JobFormData } from "@/app/interfaces/job-form-data";
 import graphQLClient from "@/graphQL/client";
@@ -14,8 +13,20 @@ export const GetCurrentJob = async (id : string) => {
     const variables : JobId = {
         "id" : id
     }
-    const res : Job = await graphQLClient.request(GET_JOB,variables,{Cache: "no-store"})
-    return res.job;
+    return fetch(graphQLClient , {
+        method :"POST",
+        headers : {
+            'Content-Type' : 'application/json',
+        },
+        body : JSON.stringify({
+            query : GET_JOB,
+            variables : variables
+        })
+    }).then((res)=>{
+        return res.json()
+    }).then((res)=>{
+        return res.data.job;
+    })
 }
 const UpdateJob = async (params : params) => {
     const jobID : string = params.params.id;
@@ -29,6 +40,7 @@ const UpdateJob = async (params : params) => {
     }
 
     const handleUpdate = async (jobData : JobFormData) : Promise<JobListing>=> {
+        "use server"
         const variables = {
             "id" : jobID,
             "input" : {
@@ -38,7 +50,18 @@ const UpdateJob = async (params : params) => {
                 "url" : jobData.url
             }
         }
-        return await graphQLClient.request(UPDATE_JOB, variables)  
+        return fetch(graphQLClient , {
+            method :"POST",
+            headers : {
+                'Content-Type' : 'application/json',
+            },
+            body : JSON.stringify({
+                query : UPDATE_JOB,
+                variables : variables
+            })
+        }).then((res)=>{
+            return res.json()
+        })
     }
     return (
         <div>

@@ -1,4 +1,3 @@
-"use client"
 import JobForm from "@/app/components/job-form/job-form";
 import {JobFormData } from "@/app/interfaces/job-form-data";
 import graphQLClient from "@/graphQL/client";
@@ -15,6 +14,7 @@ const CreateJob = () => {
 
     }
     const handleCreate = async (jobData : JobFormData) : Promise<JobListing> => {
+        "use server"
         const variables = {
             "input" : {
                 "company" : jobData.company,
@@ -23,8 +23,18 @@ const CreateJob = () => {
                 "url" : jobData.url
             }
         }
-
-        return  await graphQLClient.request(CREATE_JOB, variables)      
+        return fetch(graphQLClient , {
+            method :"POST",
+            headers : {
+                'Content-Type' : 'application/json',
+            },
+            body : JSON.stringify({
+                query : CREATE_JOB,
+                variables : variables
+            })
+        }).then((res)=>{
+            return res.json()
+        }) 
     }
     return (
         <div>
