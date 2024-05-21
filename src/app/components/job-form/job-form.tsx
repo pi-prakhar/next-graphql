@@ -46,7 +46,6 @@ const JobForm = (props : props) => {
         await props.handleSubmit(jobForm).then((res)=>{
             console.log(res)
             window.alert("Success")
-
         }).catch((err) =>{
             window.alert(`${err}`)
         })

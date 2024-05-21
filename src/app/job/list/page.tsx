@@ -8,7 +8,9 @@ import pageStyles from "./page.module.css"
 
 export const GetAllJobs = async () => {
     return fetch(graphQLClient , {
-        cache :'no-store',
+        next : {
+            tags : ['job-list'],
+        },
         method :"POST",
         headers : {
             'Content-Type' : 'application/json',

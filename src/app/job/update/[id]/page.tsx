@@ -4,6 +4,7 @@ import graphQLClient from "@/graphQL/client";
 import {GET_JOB, UPDATE_JOB } from "@/graphQL/queries";
 import rootStyles from "../../@styles/job.module.css";
 import { Job, JobId, JobListing} from "@/app/interfaces/job-listing";
+import { revalidateTag } from "next/cache";
 
 interface params{
     params : JobId
@@ -14,6 +15,9 @@ export const GetCurrentJob = async (id : string) => {
         "id" : id
     }
     return fetch(graphQLClient , {
+        next : {
+            tags : ['job']
+        },
         method :"POST",
         headers : {
             'Content-Type' : 'application/json',
@@ -60,6 +64,8 @@ const UpdateJob = async (params : params) => {
                 variables : variables
             })
         }).then((res)=>{
+            revalidateTag('joblist')
+            revalidateTag('job')
             return res.json()
         })
     }

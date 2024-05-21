@@ -4,6 +4,7 @@ import graphQLClient from "@/graphQL/client";
 import { CREATE_JOB } from "@/graphQL/queries";
 import rootStyles from "../@styles/job.module.css";
 import { JobListing } from "@/app/interfaces/job-listing";
+import { revalidateTag } from "next/cache";
 
 const CreateJob = () => {
     const newJob :JobFormData = {
@@ -34,7 +35,11 @@ const CreateJob = () => {
             })
         }).then((res)=>{
             return res.json()
-        }) 
+        }).then((res)=>{
+            const job : JobListing = res.data.createJobListing
+            revalidateTag('joblist')
+            return job;
+        })
     }
     return (
         <div>

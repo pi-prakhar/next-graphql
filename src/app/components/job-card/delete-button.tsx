@@ -3,6 +3,7 @@ import graphQLClient from '@/graphQL/client';
 import styles from '../job-card/job-card.module.css'
 import { DELETE_JOB } from '@/graphQL/queries';
 import { JobId } from '@/app/interfaces/job-listing';
+import { revalidateTag } from 'next/cache';
 
 interface ChildProps {
     id: string;
@@ -23,6 +24,7 @@ export const DeleteIcon: React.FC<ChildProps> = (ChildProps) =>{
                 variables : variables
             })
         })
+        revalidateTag('joblist')
     }
     return (
         <div className={styles.iconContainer} onClick={handleDelete}>
