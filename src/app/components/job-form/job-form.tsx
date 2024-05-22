@@ -49,6 +49,7 @@ const JobForm = (props : props) => {
         }).catch((err) =>{
             window.alert(`${err}`)
         })
+        router.push('/job/list')
     }
     return (
         <div className={styles.formWrapper}>

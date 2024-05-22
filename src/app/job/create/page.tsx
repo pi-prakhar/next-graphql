@@ -24,7 +24,7 @@ const CreateJob = () => {
                 "url" : jobData.url
             }
         }
-        return fetch(graphQLClient , {
+        const job : JobListing =  await fetch(graphQLClient , {
             method :"POST",
             headers : {
                 'Content-Type' : 'application/json',
@@ -34,12 +34,13 @@ const CreateJob = () => {
                 variables : variables
             })
         }).then((res)=>{
+            revalidateTag('job-list')
             return res.json()
         }).then((res)=>{
-            const job : JobListing = res.data.createJobListing
-            revalidateTag('joblist')
-            return job;
+            return res.data.createJobListing
         })
+
+        return job;
     }
     return (
         <div>

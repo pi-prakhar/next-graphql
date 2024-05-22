@@ -35,7 +35,6 @@ export const GetCurrentJob = async (id : string) => {
 const UpdateJob = async (params : params) => {
     const jobID : string = params.params.id;
     const currentJob : JobListing = await GetCurrentJob(jobID);
-
     const currentJobData :JobFormData = {
         title : currentJob.title,
         company : currentJob.company,
@@ -64,7 +63,7 @@ const UpdateJob = async (params : params) => {
                 variables : variables
             })
         }).then((res)=>{
-            revalidateTag('joblist')
+            revalidateTag('job-list')
             revalidateTag('job')
             return res.json()
         })
