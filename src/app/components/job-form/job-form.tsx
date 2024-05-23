@@ -5,19 +5,19 @@ import styles from "./job-form.module.css";
 import { JobListing } from "@/app/interfaces/job-listing";
 import { useRouter } from "next/navigation";
 
+
 interface props {
     form : JobFormData
     buttonName :string
     handleSubmit : (jobData : JobFormData) => Promise<JobListing>;
 }
 const JobForm = (props : props) => {
-    const router = useRouter();
     const jobData : JobFormData = props.form;
     const [company,setCompany] = useState<string>(jobData.company);
     const [description,setDescription] = useState<string>(jobData.description);
     const [title,setTitle] = useState<string>(jobData.title);
     const [url,setUrl] = useState<string>(jobData.url);
-
+    const router = useRouter()
     const handleCompany = (event : any) => {
         const { name, value } = event.target;
         setCompany(value);
@@ -45,15 +45,17 @@ const JobForm = (props : props) => {
         }
         await props.handleSubmit(jobForm).then((res)=>{
             console.log(res)
-            window.alert("Success")
+            //window.alert("Success")
         }).catch((err) =>{
-            window.alert(`${err}`)
+            //window.alert(`${err}`)
         })
+        console.log("finshed")
         router.push('/job/list')
+
     }
     return (
         <div className={styles.formWrapper}>
-            <form  onSubmit={handleSubmit}>
+            <form  onSubmit={() => router.push('/')}>
                 <input
                     className={styles.formInput}
                     type="text"

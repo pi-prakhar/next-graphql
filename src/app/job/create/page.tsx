@@ -5,6 +5,7 @@ import { CREATE_JOB } from "@/graphQL/queries";
 import rootStyles from "../@styles/job.module.css";
 import { JobListing } from "@/app/interfaces/job-listing";
 import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 
 const CreateJob = () => {
     const newJob :JobFormData = {
